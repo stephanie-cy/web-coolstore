@@ -15,11 +15,21 @@ components:
     env:
       - name: MAVEN_OPTS
         value: '-Xmx2048m -Duser.home=/home/theia'
-      - name: MAVEN_MIRROR_URL
-        value: http://nexus.opentlc-shared.svc:8081/repository/maven-all-public
+      # - name: MAVEN_MIRROR_URL
+      #   value: http://nexus.opentlc-shared.svc:8081/repository/maven-all-public
     volumes:
       - name: kubefolder
         containerPath: /home/theia/.kube
+  - mountSources: true
+    endpoints:
+      - name: localhost-8080
+        port: 8080
+      - name: localhost-9000
+        port: 9000
+    memoryLimit: 1024Mi
+    type: dockerimage
+    alias: maven
+    image: 'quay.io/eclipse/che-java11-maven:7.15.0'
 apiVersion: 1.0.0
 commands:
   - name: Configure tasks
