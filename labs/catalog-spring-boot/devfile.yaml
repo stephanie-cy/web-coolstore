@@ -1,50 +1,59 @@
-schemaVersion: 2.0.0
-metadata:
-  name: java-maven
-  version: 1.1.0
-  displayName: Maven Java
-  description: Upstream Maven and OpenJDK 11
-  tags: ["Java", "Maven"]
-  projectType: "maven"
-  language: "java"
-starterProjects:
-  - name: springbootproject
-    git:
-      remotes:
-        origin: "https://github.com/odo-devfiles/springboot-ex.git"
-components:
-  - name: tools
-    container:
-      image: quay.io/eclipse/che-java11-maven:nightly
-      memoryLimit: 512Mi
-      mountSources: true
-      endpoints:
-        - name: 'http-8080'
-          targetPort: 8080
-      volumeMounts:
-        - name: m2
-          path: /home/user/.m2
-  - name: m2
-    volume: {}
 commands:
-  - id: mvn-package
-    exec:
-      component: tools
-      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository package"
-      group:
-        kind: build
-        isDefault: true
-  - id: run 
-    exec:
-      component: tools
-      commandLine: "java -jar target/*.jar"
-      group:
-        kind: run
-        isDefault: true
-  - id: debug
-    exec:
-      component: tools
-      commandLine: "java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar"
-      group:
-        kind: debug
-        isDefault: true
+- exec:
+    commandLine: mvn clean -Dmaven.repo.local=/home/user/.m2/repository package -Dmaven.test.skip=true
+    component: tools
+    group:
+      isDefault: true
+      kind: build
+  id: build
+- exec:
+    commandLine: mvn -Dmaven.repo.local=/home/user/.m2/repository spring-boot:run
+    component: tools
+    group:
+      isDefault: true
+      kind: run
+  id: run
+- exec:
+    commandLine: java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n
+      -jar target/*.jar
+    component: tools
+    group:
+      isDefault: true
+      kind: debug
+  id: debug
+components:
+- container:
+    endpoints:
+    - exposure: public
+      name: tcp-9000
+      path: /
+      protocol: http
+      targetPort: 9000
+    image: quay.io/eclipse/che-java11-maven:nightly
+    memoryLimit: 768Mi
+    mountSources: true
+    volumeMounts:
+    - name: m2
+      path: /home/user/.m2
+  name: tools
+- name: m2
+  volume:
+    size: 3Gi
+metadata:
+  description: Spring Boot® using Java
+  displayName: Spring Boot®
+  globalMemoryLimit: 2674Mi
+  icon: https://www.eclipse.org/che/images/logo-eclipseche.svg
+  language: java
+  name: java-springboot
+  projectType: spring
+  tags:
+  - Java
+  - Spring
+  version: 1.1.0
+schemaVersion: 2.0.0
+starterProjects:
+- git:
+    remotes:
+      origin: https://github.com/odo-devfiles/springboot-ex.git
+  name: springbootproject

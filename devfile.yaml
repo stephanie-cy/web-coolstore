@@ -9,8 +9,8 @@ projects:
       type: github
       branch: '5.0'
 components:
-  #- reference: https://raw.githubusercontent.com/mcouliba/che-plugin-registry/5.0/v3/plugins/redhat/workshop-tools/5.0.1/meta.yaml
-  - reference: https://eclipse-che.github.io/che-plugin-registry/main/v3/plugins/redhat/vscode-openshift-connector/latest/
+  - reference: https://raw.githubusercontent.com/mcouliba/che-plugin-registry/5.0/v3/plugins/redhat/workshop-tools/5.0.1/meta.yaml
+  # - reference: https://eclipse-che.github.io/che-plugin-registry/main/v3/plugins/redhat/vscode-openshift-connector/latest/
     type: chePlugin
     alias: workshop-tools
     env:
@@ -18,11 +18,9 @@ components:
         value: '-Xmx2048m -Duser.home=/home/theia'
       # - name: MAVEN_MIRROR_URL
       #   value: http://nexus.opentlc-shared.svc:8081/repository/maven-all-public
-    # volumes:
-    #   - name: kubefolder
-    #     containerPath: /home/theia/.kube
-    # - type: chePlugin
-    #   id: redhat/vscode-openshift-connector/latest
+    volumes:
+      - name: kubefolder
+        containerPath: /home/theia/.kube
 apiVersion: 1.0.0
 commands:
   - name: Configure tasks
@@ -83,7 +81,7 @@ commands:
               {
                 "type": "che",
                 "label": "Inventory - Create devfile Component",
-                "command": "odo component create java-quarkus inventory --app coolstore --project my-project${CHE_WORKSPACE_NAMESPACE#user}",
+                "command": "odo component create inventory --app coolstore --project my-project${CHE_WORKSPACE_NAMESPACE#user}",
                 "target": {
                     "workingDir": "/projects/workshop/labs/inventory-quarkus",
                     "component": "workshop-tools"
