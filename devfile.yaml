@@ -82,6 +82,16 @@ commands:
               },
               {
                 "type": "che",
+                "label": "Inventory - Create devfile Component",
+                "command": "odo component create java-quarkus inventory --app coolstore --project my-project${CHE_WORKSPACE_NAMESPACE#user}",
+                "target": {
+                    "workingDir": "/projects/workshop/labs/inventory-quarkus",
+                    "component": "workshop-tools"
+                },
+                "problemMatcher": []
+              },
+              {
+                "type": "che",
                 "label": "Inventory - Push",
                 "command": "odo push",
                 "target": {
