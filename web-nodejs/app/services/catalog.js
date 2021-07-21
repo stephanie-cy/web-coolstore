@@ -10,7 +10,6 @@ angular.module("app")
 	} else {
 		baseUrl = (COOLSTORE_CONFIG.API_ENDPOINT.startsWith("http://") ? COOLSTORE_CONFIG.API_ENDPOINT : "http://" + COOLSTORE_CONFIG.API_ENDPOINT + '.' + $location.host().replace(/^.*?\.(.*)/g,"$1")) + '/api/products';
 	}
-
 	factory.getProducts = function() {
 		var deferred = $q.defer();
         if (products) {
@@ -18,7 +17,7 @@ angular.module("app")
         } else {
             $http({
                 method: 'GET',
-								url: baseUrl
+				url: baseUrl
             }).then(function(resp) {
                 products = resp.data;
                 deferred.resolve(resp.data);

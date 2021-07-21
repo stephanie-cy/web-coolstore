@@ -25,7 +25,7 @@ components:
 - container:
     endpoints:
     - exposure: public
-      name: tcp-9000
+      name: catalog
       path: /
       protocol: http
       targetPort: 9000

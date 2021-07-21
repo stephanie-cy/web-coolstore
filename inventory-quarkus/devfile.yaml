@@ -27,8 +27,6 @@ commands:
 components:
 - container:
     endpoints:
-    # - name: 8080-http
-    #   targetPort: 8080
     - exposure: public
       name: inventory
       path: /

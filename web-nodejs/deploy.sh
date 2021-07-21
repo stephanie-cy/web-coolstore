@@ -2,17 +2,18 @@
 #    Deploy web-nodejs   #
 ##########################
 
+DIRECTORY=`dirname $0`
 PROJECT_NAME=$1
 
-oc project ${PROJECT_NAME}
-oc delete service web-coolstore 
-oc delete route web-coolstore
-oc delete buildconfig web-coolstore
-oc delete deploymentconfig web-coolstore
+cd ${DIRECTORY}
 
-oc new-app nodejs~https://github.com/yangcao77/cloud-native-workshop \
-        --context-dir=labs/web-nodejs \
-        --name=web-coolstore \
-        --labels=app=coolstore,app.kubernetes.io/instance=web,app.kubernetes.io/part-of=coolstore,app.kubernetes.io/name=nodejs
+odo project set ${PROJECT_NAME}
 
-oc expose svc/web-coolstore
+odo config unset --env OPENSHIFT_BUILD_NAMESPACE &> /dev/null
+odo delete --all --force &> /dev/null
+
+odo create web --app coolstore
+odo config set --env OPENSHIFT_BUILD_NAMESPACE=${PROJECT_NAME}
+odo push
+
+echo "Web Node.js Deployed"
