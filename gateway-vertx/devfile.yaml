@@ -28,11 +28,6 @@ components:
       path: /
       protocol: http
       targetPort: 8080
-    env:
-    - name: COMPONENT_CATALOG_HOST
-      value: 172.30.89.167
-    - name: COMPONENT_CATALOG_PORT
-      value: "9000"
     image: quay.io/eclipse/che-java11-maven:nightly
     memoryLimit: 512Mi
     mountSources: true
