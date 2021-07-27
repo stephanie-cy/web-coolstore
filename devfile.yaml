@@ -1,9 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
   name: web-coolstore
-# attributes:
-#   .che/che-theia-plugins.yaml: |
-#     - id: redhat/vscode-openshift-connector
 attributes:
   .vscode/extensions.json: |
     {
@@ -27,8 +24,20 @@ commands:
   - id: create-namespace
     exec:
       component: vscode-openshift-connector
-      commandLine: odo project create coolstore-project
+      commandLine: oc new-project coolstore-project-${DEVWORKSPACE_NAME}
   - id: start-catalog
     exec:
       component: vscode-openshift-connector
-      commandLine: cd ${PROJECTS_SOURCE}/catalog-spring-boot && ./deoloy.sh coolstore-project
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/catalog-spring-boot && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+  - id: start-inventory
+    exec:
+      component: vscode-openshift-connector
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/inventory-quarkus && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+  - id: start-gateway
+    exec:
+      component: vscode-openshift-connector
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/gateway-vertx && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+  - id: start-webui
+    exec:
+      component: vscode-openshift-connector
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/web-nodejs && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
