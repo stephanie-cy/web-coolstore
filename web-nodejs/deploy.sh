@@ -13,6 +13,13 @@ odo config unset --env OPENSHIFT_BUILD_NAMESPACE &> /dev/null
 odo delete --force &> /dev/null
 rm -rf .odo/ &> /dev/null
 
+PODS="web-coolstore"
+while [[ $PODS == *"web-coolstore"* ]]
+do
+  PODS=`oc get pod -n ${PROJECT_NAME} `
+  sleep 1
+done
+
 odo create web --app coolstore
 odo config set --env OPENSHIFT_BUILD_NAMESPACE=${PROJECT_NAME}
 odo push

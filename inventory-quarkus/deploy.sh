@@ -11,6 +11,14 @@ cd ${DIRECTORY}
 odo project set ${PROJECT_NAME}
 odo delete --force &> /dev/null
 rm -rf .odo/ &> /dev/null
+
+PODS="inventory-coolstore"
+while [[ $PODS == *"inventory-coolstore"* ]]
+do
+  PODS=`oc get pod -n ${PROJECT_NAME} `
+  sleep 1
+done
+
 odo create inventory --app coolstore
 odo push
 

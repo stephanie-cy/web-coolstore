@@ -20,6 +20,14 @@ else
 fi
 odo delete --force &> /dev/null
 rm -rf .odo/ &> /dev/null
+
+PODS="gateway-coolstore"
+while [[ $PODS == *"gateway-coolstore"* ]]
+do
+  PODS=`oc get pod -n ${PROJECT_NAME} `
+  sleep 1
+done
+
 odo create gateway --app coolstore
 
 if [[ $OPERATORS == *"rh-service-binding-operator"* ]]; then
