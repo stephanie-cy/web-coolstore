@@ -8,11 +8,7 @@ attributes:
   .vscode/extensions.json: |
     {
       "recommendations": [
-        "redhat.vscode-openshift-connector",
-        "redhat.java",
-        "ms-kubernetes-tools.vscode-kubernetes-tools"
-        "redhat.vscode-yaml",
-        "vscjava.vscode-java-debug"
+        "redhat.vscode-openshift-connector"
       ]
     }
 projects:
@@ -24,59 +20,15 @@ projects:
         remote: origin
         revision: 'completed-sample'
 components:
-  # - name: test
-  #   container:
-  #     image: 'quay.io/eclipse/che-java11-maven:7.4.0'
-  #     memoryLimit: 1024Mi
-  #     mountSources: true
-  #     endpoints:
-  #       - name: localhost-8080
-  #         targetPort: 8080
-  #       - name: localhost-9000
-  #         targetPort: 9000
-  - name: workshop-tools
-    container:
-      image: quay.io/mcouliba/remote-plugin-workshop-tooling:5.0
-      memoryLimit: "4G"
-      env:
-        - name: MAVEN_OPTS
-          value: '-Xmx2048m -Duser.home=/home/theia'
-      volumeMounts:
-        - name: kube
-          path: /home/theia/.kube
   - name: kube
     volume:
         size: 1024Mi
-# - name: nodejs
-#   container:
-#     image: "sleshchenko/nodejs-mongo-sample:latest"
-#     endpoints:
-#       - exposure: public
-#         name: http-server
-#         protocol: http
-#         targetPort: 3000
-#     env:
-#       - name: MONGO_HOST
-#         value: "localhost"
-#       - name: MONGO_PORT
-#         value: "27017"
-#     mountSources: true
-# - name: mongo-db
-#   container:
-#     image: mongo
-#     endpoints:
-#       - exposure: none
-#         name: mongo
-#         protocol: tcp
-#         targetPort: 27017
-#     volumeMounts:
-#     - name: db-storage
-#       path: /data/db
-# - name: db-storage
-#   volume:
-#     size: 1Gi
-# commands:
-#   - id: start-catalog
-#     exec:
-#       component: workshop-tools
-#       commandLine: cd ${PROJECTS_SOURCE}/catalog-spring-boot && ./deoloy.sh coolstore-project
+commands:
+  - id: create-namespace
+    exec:
+      component: vscode-openshift-connector
+      commandLine: odo project create coolstore-project
+  - id: start-catalog
+    exec:
+      component: vscode-openshift-connector
+      commandLine: cd ${PROJECTS_SOURCE}/catalog-spring-boot && ./deoloy.sh coolstore-project
