@@ -13,10 +13,20 @@ projects:
         remote: origin
         revision: 'completed-sample'
 components:
-  - name: workshop-tools
+  - name: test
     container:
-      image: quay.io/mcouliba/remote-plugin-workshop-tooling:5.0
-      memoryLimit: "4G"
+      image: 'quay.io/eclipse/che-java11-maven:7.4.0'
+      memoryLimit: 1024Mi
+      mountSources: true
+      endpoints:
+        - name: localhost-8080
+          targetPort: 8080
+        - name: localhost-9000
+          targetPort: 9000
+  # - name: workshop-tools
+  #   container:
+  #     image: quay.io/mcouliba/remote-plugin-workshop-tooling:5.0
+  #     memoryLimit: "4G"
 # - name: nodejs
 #   container:
 #     image: "sleshchenko/nodejs-mongo-sample:latest"
@@ -45,8 +55,8 @@ components:
 # - name: db-storage
 #   volume:
 #     size: 1Gi
-commands:
-  - id: start-catalog
-    exec:
-      component: workshop-tools
-      commandLine: cd ${PROJECTS_SOURCE}/catalog-spring-boot && ./deoloy.sh coolstore-project
+# commands:
+#   - id: start-catalog
+#     exec:
+#       component: workshop-tools
+#       commandLine: cd ${PROJECTS_SOURCE}/catalog-spring-boot && ./deoloy.sh coolstore-project
