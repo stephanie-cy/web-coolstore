@@ -28,6 +28,15 @@ components:
       path: /
       protocol: http
       targetPort: 8080
+    env:
+    - name: INVENTORY_COOLSTORE_SERVICE_PORT
+      value: "8080"
+    - name: CATALOG_COOLSTORE_SERVICE_PORT
+      value: ""
+    - name: CATALOG_COOLSTORE_SERVICE_HOST
+      value: ""
+    - name: INVENTORY_COOLSTORE_SERVICE_HOST
+      value: 172.30.17.201
     image: quay.io/eclipse/che-java11-maven:nightly
     memoryLimit: 512Mi
     mountSources: true

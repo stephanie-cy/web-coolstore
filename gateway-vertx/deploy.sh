@@ -18,7 +18,8 @@ else
     odo config unset --env CATALOG_COOLSTORE_SERVICE_HOST --env CATALOG_COOLSTORE_SERVICE_PORT &> /dev/null
     odo config unset --env INVENTORY_COOLSTORE_SERVICE_HOST --env INVENTORY_COOLSTORE_SERVICE_PORT &> /dev/null
 fi
-odo delete --all --force &> /dev/null
+odo delete --force &> /dev/null
+rm -rf .odo/ &> /dev/null
 odo create gateway --app coolstore
 
 if [[ $OPERATORS == *"rh-service-binding-operator"* ]]; then
@@ -39,3 +40,5 @@ else
 fi
 
 echo "Gateway Vertx Deployed"
+
+cd ..

@@ -24,20 +24,24 @@ commands:
   - id: create-namespace
     exec:
       component: vscode-openshift-connector
-      commandLine: oc new-project coolstore-project-${DEVWORKSPACE_NAME}
+      commandLine: oc new-project coolstore-project-${DEVWORKSPACE_ID}
   - id: start-catalog
     exec:
       component: vscode-openshift-connector
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/catalog-spring-boot && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/catalog-spring-boot && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
   - id: start-inventory
     exec:
       component: vscode-openshift-connector
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/inventory-quarkus && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/inventory-quarkus && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
   - id: start-gateway
     exec:
       component: vscode-openshift-connector
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/gateway-vertx && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/gateway-vertx && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
   - id: start-webui
     exec:
       component: vscode-openshift-connector
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/web-nodejs && ./deoloy.sh coolstore-project-${DEVWORKSPACE_NAME}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/web-nodejs && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
+  - id: deploy-all
+    exec:
+      component: vscode-openshift-connector
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore && ./deploy-all.sh coolstore-project-${DEVWORKSPACE_ID}
