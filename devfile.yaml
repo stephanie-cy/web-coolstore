@@ -4,6 +4,17 @@ metadata:
 # attributes:
 #   .che/che-theia-plugins.yaml: |
 #     - id: redhat/vscode-openshift-connector
+attributes:
+  .vscode/extensions.json: |
+    {
+      "recommendations": [
+        "redhat.vscode-openshift-connector",
+        "redhat.java",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
+        "redhat.vscode-yaml",
+        "vscjava.vscode-java-debug"
+      ]
+    }
 projects:
   - name: web-coolstore
     git:
@@ -13,20 +24,29 @@ projects:
         remote: origin
         revision: 'completed-sample'
 components:
-  - name: test
-    container:
-      image: 'quay.io/eclipse/che-java11-maven:7.4.0'
-      memoryLimit: 1024Mi
-      mountSources: true
-      endpoints:
-        - name: localhost-8080
-          targetPort: 8080
-        - name: localhost-9000
-          targetPort: 9000
-  # - name: workshop-tools
+  # - name: test
   #   container:
-  #     image: quay.io/mcouliba/remote-plugin-workshop-tooling:5.0
-  #     memoryLimit: "4G"
+  #     image: 'quay.io/eclipse/che-java11-maven:7.4.0'
+  #     memoryLimit: 1024Mi
+  #     mountSources: true
+  #     endpoints:
+  #       - name: localhost-8080
+  #         targetPort: 8080
+  #       - name: localhost-9000
+  #         targetPort: 9000
+  - name: workshop-tools
+    container:
+      image: quay.io/mcouliba/remote-plugin-workshop-tooling:5.0
+      memoryLimit: "4G"
+      env:
+        - name: MAVEN_OPTS
+          value: '-Xmx2048m -Duser.home=/home/theia'
+      volumeMounts:
+        - name: kube
+          path: /home/theia/.kube
+  - name: kube
+    volume:
+        size: 1024Mi
 # - name: nodejs
 #   container:
 #     image: "sleshchenko/nodejs-mongo-sample:latest"
