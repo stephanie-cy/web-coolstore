@@ -1,0 +1,61 @@
+components:
+- kubernetes:
+    inlined: |
+      apiVersion: binding.operators.coreos.com/v1alpha1
+      kind: ServiceBinding
+      metadata:
+        creationTimestamp: null
+        name: gateway-inventory
+      spec:
+        application:
+          group: apps
+          name: gateway-coolstore
+          resource: deployments
+          version: v1
+        bindAsFiles: false
+        detectBindingResources: true
+        services:
+        - group: ""
+          kind: Service
+          name: inventory-coolstore
+          version: v1
+      status:
+        secret: ""
+  name: gateway-inventory
+- kubernetes:
+    inlined: |
+      apiVersion: binding.operators.coreos.com/v1alpha1
+      kind: ServiceBinding
+      metadata:
+        creationTimestamp: null
+        name: gateway-catalog
+      spec:
+        application:
+          group: apps
+          name: gateway-coolstore
+          resource: deployments
+          version: v1
+        bindAsFiles: false
+        detectBindingResources: true
+        services:
+        - group: ""
+          kind: Service
+          name: catalog-coolstore
+          version: v1
+      status:
+        secret: ""
+  name: gateway-catalog
+metadata:
+  description: Upstream Vert.x using Java
+  displayName: Vert.x Java
+  language: java
+  name: gateway-vertx
+  projectType: vertx
+  tags:
+  - Java
+  - Vert.x
+  version: 1.1.0
+schemaVersion: 2.0.0
+parent:
+  id: java-vertx
+  registryUrl: "https://registry.devfile.io"
