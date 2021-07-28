@@ -42,7 +42,7 @@ metadata:
   description: Upstream Vert.x using Java
   displayName: Vert.x Java
   language: java
-  name: java-vertx
+  name: gateway-vertx
   projectType: vertx
   tags:
   - Java
