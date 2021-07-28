@@ -28,6 +28,12 @@ do
   sleep 1
 done
 
+APP_SUFFIX="-coolstore"
+
+if [[ $DEVWORKSPACE_NAMESPACE == "che-che" ]]; then
+    APP_SUFFIX=""
+fi
+
 odo create gateway --app coolstore
 
 if [[ $OPERATORS == *"rh-service-binding-operator"* ]]; then
@@ -36,10 +42,10 @@ if [[ $OPERATORS == *"rh-service-binding-operator"* ]]; then
     odo link catalog
     odo push
 else
-    CATALOG_HOST=$(oc get svc catalog-coolstore -o jsonpath={.spec.clusterIP})
-    CATALOG_PORT=$(oc get svc catalog-coolstore -o jsonpath={.spec.ports[].port})
-    INVENTORY_HOST=$(oc get svc inventory-coolstore -o jsonpath={.spec.clusterIP})
-    INVENTORY_PORT=$(oc get svc inventory-coolstore -o jsonpath={.spec.ports[].port})
+    CATALOG_HOST=$(oc get svc catalog${APP_SUFFIX} -o jsonpath={.spec.clusterIP})
+    CATALOG_PORT=$(oc get svc catalog${APP_SUFFIX} -o jsonpath={.spec.ports[].port})
+    INVENTORY_HOST=$(oc get svc inventory${APP_SUFFIX} -o jsonpath={.spec.clusterIP})
+    INVENTORY_PORT=$(oc get svc inventory${APP_SUFFIX} -o jsonpath={.spec.ports[].port})
 
     odo config set --env CATALOG_COOLSTORE_SERVICE_HOST=$CATALOG_HOST --env CATALOG_COOLSTORE_SERVICE_PORT=$CATALOG_PORT
     odo config set --env INVENTORY_COOLSTORE_SERVICE_HOST=$INVENTORY_HOST --env INVENTORY_COOLSTORE_SERVICE_PORT=$INVENTORY_PORT
