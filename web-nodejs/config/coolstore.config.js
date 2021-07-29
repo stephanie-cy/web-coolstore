@@ -1,8 +1,8 @@
 const { ContextExclusionPlugin } = require("webpack");
 
 var config = {
-    API_ENDPOINT: 'gateway-coolstore-' + process.env.OPENSHIFT_BUILD_NAMESPACE,
-    SECURE_API_ENDPOINT: 'secure-gateway-coolstore-' + process.env.SECURE_COOLSTORE_GW_SERVICE,
+    API_ENDPOINT: process.env.URL_PREFIX + process.env.OPENSHIFT_BUILD_NAMESPACE,
+    SECURE_API_ENDPOINT: 'secure-' + process.env.URL_PREFIX + process.env.SECURE_COOLSTORE_GW_SERVICE,
     SSO_ENABLED: process.env.SSO_URL ? true : false
 };
 
