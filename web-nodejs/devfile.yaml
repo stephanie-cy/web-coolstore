@@ -1,5 +1,7 @@
 commands:
-- exec:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
     commandLine: npm install
     component: runtime
     group:
@@ -7,7 +9,9 @@ commands:
       kind: build
     workingDir: /project
   id: install
-- exec:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
     commandLine: npm start
     component: runtime
     group:
@@ -15,7 +19,9 @@ commands:
       kind: run
     workingDir: /project
   id: run
-- exec:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
     commandLine: npm run debug
     component: runtime
     group:
@@ -23,7 +29,9 @@ commands:
       kind: debug
     workingDir: /project
   id: debug
-- exec:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
     commandLine: npm test
     component: runtime
     group:
@@ -32,10 +40,20 @@ commands:
     workingDir: /project
   id: test
 components:
-- container:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+    api.devfile.io/parent-override-from: main devfile
+  container:
     endpoints:
-    - name: web
+    - exposure: public
+      name: web
       targetPort: 8080
+    - exposure: internal
+      name: http-3000
+      targetPort: 3000
+    env:
+    - name: OPENSHIFT_BUILD_NAMESPACE
+      value: myproject
     image: registry.access.redhat.com/ubi8/nodejs-14:latest
     memoryLimit: 1024Mi
     mountSources: true
@@ -53,3 +71,10 @@ metadata:
   - ubi8
   version: 1.0.1
 schemaVersion: 2.0.0
+starterProjects:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  git:
+    remotes:
+      origin: https://github.com/odo-devfiles/nodejs-ex.git
+  name: nodejs-starter
