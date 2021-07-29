@@ -24,4 +24,4 @@ odo push
 
 echo "Inventory Quarkus Deployed"
 
-cd ..
+cd -

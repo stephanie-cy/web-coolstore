@@ -55,4 +55,4 @@ fi
 
 echo "Gateway Vertx Deployed"
 
-cd ..
+cd -

@@ -23,4 +23,4 @@ odo push
 
 echo "Catalog Spring-Boot Deployed"
 
-cd ..
+cd -

@@ -33,4 +33,4 @@ odo push
 
 echo "Web Node.js Deployed"
 
-cd ..
+cd -
