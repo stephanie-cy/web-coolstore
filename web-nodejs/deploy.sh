@@ -9,18 +9,17 @@ cd ${DIRECTORY}
 
 odo project set ${PROJECT_NAME}
 
+DESCRIBE_COMPONENT=`odo component describe web`
+
+if [[ $DESCRIBE_COMPONENT != *"web-nodejs"* ]]; then
+    # not an odo component
+    odo create web --app coolstore
+fi
+
+# unset namespace if exist in devfile
 odo config unset --env OPENSHIFT_BUILD_NAMESPACE &> /dev/null
-odo delete --force &> /dev/null
-rm -rf .odo/ &> /dev/null
 
-PODS="web-coolstore"
-while [[ $PODS == *"web-coolstore"* ]]
-do
-  PODS=`oc get pod -n ${PROJECT_NAME} `
-  sleep 1
-done
-
-odo create web --app coolstore
+# set namespace name in an env for webpage be able to access gateway
 odo config set --env OPENSHIFT_BUILD_NAMESPACE=${PROJECT_NAME}
 
 if [[ $DEVWORKSPACE_NAMESPACE == "che-che" ]]; then
@@ -32,5 +31,3 @@ fi
 odo push
 
 echo "Web Node.js Deployed"
-
-cd -

@@ -8,40 +8,36 @@ OPERATORS=$(oc get subscription -n openshift-operators)
 
 cd ${DIRECTORY}
 
-
-odo project set ${PROJECT_NAME}
-
-if [[ $OPERATORS == *"rh-service-binding-operator"* ]]; then
-    odo unlink catalog &> /dev/null
-    odo unlink inventory &> /dev/null
-else
-    odo config unset --env CATALOG_COOLSTORE_SERVICE_HOST --env CATALOG_COOLSTORE_SERVICE_PORT &> /dev/null
-    odo config unset --env INVENTORY_COOLSTORE_SERVICE_HOST --env INVENTORY_COOLSTORE_SERVICE_PORT &> /dev/null
-fi
-odo delete --force &> /dev/null
-rm -rf .odo/ &> /dev/null
-
-PODS="gateway-coolstore"
-while [[ $PODS == *"gateway-coolstore"* ]]
-do
-  PODS=`oc get pod -n ${PROJECT_NAME} `
-  sleep 1
-done
-
 APP_SUFFIX="-coolstore"
 
 if [[ $DEVWORKSPACE_NAMESPACE == "che-che" ]]; then
     APP_SUFFIX=""
 fi
 
-odo create gateway --app coolstore
+odo project set ${PROJECT_NAME}
+
+DESCRIBE_COMPONENT=`odo component describe gateway`
+if [[ $DESCRIBE_COMPONENT != *"gateway-vertx"* ]]; then
+    # not an odo component
+    odo create gateway --app coolstore
+fi
 
 if [[ $OPERATORS == *"rh-service-binding-operator"* ]]; then
+    # unlink existing services if exist
+    odo unlink catalog &> /dev/null
+    odo unlink inventory &> /dev/null
+
+    # link inventory and catalog services
     odo push
     odo link inventory
     odo link catalog
     odo push
 else
+    # unset existing Envs if exist
+    odo config unset --env CATALOG_COOLSTORE_SERVICE_HOST --env CATALOG_COOLSTORE_SERVICE_PORT &> /dev/null
+    odo config unset --env INVENTORY_COOLSTORE_SERVICE_HOST --env INVENTORY_COOLSTORE_SERVICE_PORT &> /dev/null
+
+    # set envs to link inventory and catalog services
     CATALOG_HOST=$(oc get svc catalog${APP_SUFFIX} -o jsonpath={.spec.clusterIP})
     CATALOG_PORT=$(oc get svc catalog${APP_SUFFIX} -o jsonpath={.spec.ports[].port})
     INVENTORY_HOST=$(oc get svc inventory${APP_SUFFIX} -o jsonpath={.spec.clusterIP})
@@ -53,6 +49,5 @@ else
     odo push
 fi
 
-echo "Gateway Vertx Deployed"
 
-cd -
+echo "Gateway Vertx Deployed"

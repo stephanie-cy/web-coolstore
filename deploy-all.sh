@@ -12,9 +12,6 @@ PROJECT_DIR=`dirname $0`
 if [[ $DEVWORKSPACE_NAMESPACE == "che-che" ]]; then
     PROJECT_DIR=${PROJECTS_SOURCE}/web-coolstore
     odo preference set ConsentTelemetry false &> /dev/null
-else
-    cd $PROJECT_DIR
-    PROJECT_DIR=`pwd`
 fi
 
 echo "deploying catalog component"
