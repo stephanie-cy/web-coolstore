@@ -138,3 +138,35 @@ commands:
       workingDir: $PROJECTS_ROOT/web-coolstore/web-nodejs
       group:
         kind: run
+  - id: deploy-catalog
+    composite:
+      commands:
+        - catalog-build
+        - catalog-run
+      parallel: false
+  - id: deploy-inventory
+    composite:
+      commands:
+        - inventory-compile
+        - inventory-run
+      parallel: false
+  - id: deploy-gateway
+    composite:
+      commands:
+        - gateway-build
+        - gateway-run
+      parallel: false
+  - id: deploy-web
+    composite:
+      commands:
+        - web-install
+        - web-run
+      parallel: false
+  - id: deploy-all
+    composite:
+      commands:
+        - deploy-catalog
+        - deploy-inventory
+        - deploy-gateway
+        - deploy-web
+      parallel: false
