@@ -8,8 +8,8 @@ tmp/
 .settings/
 .classpath
 .project
+.odo
 .DS_Store
 bower_components/
 node_modules/
-/Users/stephanie/Documents/cloud-native-workshop/labs/catalog-spring-boot/.odo/env
 .odo/odo-file-index.json

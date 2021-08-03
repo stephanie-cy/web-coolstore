@@ -64,9 +64,9 @@ public class GatewayVerticle extends AbstractVerticle {
 
                 vertx.createHttpServer()
                     .requestHandler(router)
-                    .listen(Integer.getInteger("http.port", 8080));
+                    .listen(Integer.getInteger("http.port", 9090));
 
-                LOG.info("Server is running on port " + Integer.getInteger("http.port", 8080));
+                LOG.info("Server is running on port " + Integer.getInteger("http.port", 9090));
             }
         });
     }

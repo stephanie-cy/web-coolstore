@@ -1,3 +1,66 @@
+commands:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm install
+    component: runtime
+    group:
+      isDefault: true
+      kind: build
+    workingDir: /project
+  id: install
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm start
+    component: runtime
+    group:
+      isDefault: true
+      kind: run
+    workingDir: /project
+  id: run
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm run debug
+    component: runtime
+    group:
+      isDefault: true
+      kind: debug
+    workingDir: /project
+  id: debug
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm test
+    component: runtime
+    group:
+      isDefault: true
+      kind: test
+    workingDir: /project
+  id: test
+components:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+    api.devfile.io/parent-override-from: main devfile
+  container:
+    endpoints:
+    - exposure: public
+      name: web
+      targetPort: 3000
+    - exposure: internal
+      name: http-3000
+      targetPort: 3000
+    env:
+    - name: URL_PREFIX
+      value: gateway-coolstore-
+    - name: OPENSHIFT_BUILD_NAMESPACE
+      value: myproject
+    image: registry.access.redhat.com/ubi8/nodejs-14:latest
+    memoryLimit: 1024Mi
+    mountSources: true
+    sourceMapping: /project
+  name: runtime
 metadata:
   description: Stack with Node.js 14
   displayName: Node.js Runtime
@@ -10,16 +73,10 @@ metadata:
   - ubi8
   version: 1.0.1
 schemaVersion: 2.0.0
-parent:
-  id: nodejs
-  registryUrl: "https://registry.devfile.io"
-  components:
-  - container:
-      endpoints:
-      - exposure: public
-        name: web
-        targetPort: 8080
-      - name: http-3000
-        targetPort: 3000
-        exposure: internal
-    name: runtime
+starterProjects:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  git:
+    remotes:
+      origin: https://github.com/odo-devfiles/nodejs-ex.git
+  name: nodejs-starter

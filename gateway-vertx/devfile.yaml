@@ -17,7 +17,7 @@ parent:
       endpoints:
       - exposure: public
         name: gateway
-        targetPort: 8080
+        targetPort: 9090
       - exposure: internal
         name: '8080-tcp'
         targetPort: 8080

@@ -1,5 +1,5 @@
 {
-    "http.port": 8080,
+    "http.port": 9090,
     "catalog.url": "http://localhost:9000",
-    "inventory.url": "http://localhost:9001"
+    "inventory.url": "http://localhost:8080"
 }
