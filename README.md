@@ -38,19 +38,4 @@ Node.js and AngularJS) adopting the microservices architecture.
           +-------------+     +-------------+
 ```
 
-
-## Agenda
-
-* Introduction to Cloud-Native Development
-* Getting your Developer Workspace with Eclipse Che7
-* Building Services with Quarkus
-* Building Services with Spring Boot
-* Building Reactive Services with Vert.x
-* Monitoring Application Health
-* Service Resilience and Fault Tolerance
-* Externalize Application Configuration
-* Building Cloud-Native Pipelines with Tekton
-* Connecting and monitoring microservice applications with Service Mesh
-* Setting up A/B Testing with Service Mesh
-
 ## Deploy the Workshop on Che

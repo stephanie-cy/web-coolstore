@@ -8,12 +8,12 @@ PROJECT_NAME=$1
 
 cd ${DIRECTORY}
 
-odo project set ${PROJECT_NAME}
+odo project set ${PROJECT_NAME} &> /dev/null
 
 DESCRIBE_COMPONENT=`odo component describe inventory`
 
 if [[ $DESCRIBE_COMPONENT != *"inventory-quarkus"* ]]; then
-    # not a odo component
+    # not an odo component
     odo create inventory --app coolstore
 fi
 

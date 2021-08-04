@@ -29,27 +29,23 @@ components:
     volume:
         size: 1024Mi
 commands:
-  - id: create-namespace
-    exec:
-      component: web-coolstore
-      commandLine: oc new-project coolstore-project-${DEVWORKSPACE_ID}
   - id: start-catalog
     exec:
       component: web-coolstore
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/catalog-spring-boot && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/catalog-spring-boot && ./deploy.sh ${DEVWORKSPACE_NAMESPACE}
   - id: start-inventory
     exec:
       component: web-coolstore
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/inventory-quarkus && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/inventory-quarkus && ./deploy.sh ${DEVWORKSPACE_NAMESPACE}
   - id: start-gateway
     exec:
       component: web-coolstore
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/gateway-vertx && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/gateway-vertx && ./deploy.sh ${DEVWORKSPACE_NAMESPACE}
   - id: start-webui
     exec:
       component: web-coolstore
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/web-nodejs && ./deploy.sh coolstore-project-${DEVWORKSPACE_ID}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore/web-nodejs && ./deploy.sh ${DEVWORKSPACE_NAMESPACE}
   - id: deploy-all
     exec:
       component: web-coolstore
-      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore && ./deploy-all.sh coolstore-project-${DEVWORKSPACE_ID}
+      commandLine: cd ${PROJECTS_SOURCE}/web-coolstore && ./deploy-all.sh ${DEVWORKSPACE_NAMESPACE}

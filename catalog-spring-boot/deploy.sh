@@ -7,7 +7,7 @@ PROJECT_NAME=$1
 
 cd ${DIRECTORY}
 
-odo project set ${PROJECT_NAME}
+odo project set ${PROJECT_NAME} &> /dev/null
 
 DESCRIBE_COMPONENT=`odo component describe catalog`
 
