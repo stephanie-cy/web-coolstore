@@ -10,7 +10,7 @@ cd ${DIRECTORY}
 
 APP_SUFFIX="-coolstore"
 
-if [ $DEVWORKSPACE_NAMESPACE != "" ]; then
+if [[ $DEVWORKSPACE_NAMESPACE != "" ]]; then
     APP_SUFFIX=""
 fi
 
@@ -22,7 +22,7 @@ if [[ $DESCRIBE_COMPONENT != *"gateway-vertx"* ]]; then
     odo create gateway --app coolstore
 fi
 
-if [ $OPERATORS == *"rh-service-binding-operator"* ]; then
+if [ "$OPERATORS" = *"rh-service-binding-operator"* ]; then
     # unlink existing services if exist
     odo unlink catalog &> /dev/null
     odo unlink inventory &> /dev/null
