@@ -22,11 +22,8 @@ odo config unset --env OPENSHIFT_BUILD_NAMESPACE &> /dev/null
 # set namespace name in an env for webpage be able to access gateway
 odo config set --env OPENSHIFT_BUILD_NAMESPACE=${PROJECT_NAME}
 
-if [ $DEVWORKSPACE_NAMESPACE == "che-che" ]; then
-    odo config set --env URL_PREFIX="gateway-gateway-"
-else
-    odo config set --env URL_PREFIX="gateway-coolstore-"
-fi
+odo config set --env URL_PREFIX="gateway-coolstore-"
+
 
 odo push
 

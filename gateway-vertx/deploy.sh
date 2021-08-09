@@ -10,10 +10,6 @@ cd ${DIRECTORY}
 
 APP_SUFFIX="-coolstore"
 
-if [[ $DEVWORKSPACE_NAMESPACE != "" ]]; then
-    APP_SUFFIX=""
-fi
-
 odo project set ${PROJECT_NAME} &> /dev/null
 
 DESCRIBE_COMPONENT=`odo component describe gateway`
