@@ -12,10 +12,10 @@ projects:
   - name: web-coolstore
     git:
       remotes:
-        origin: 'https://github.com/yangcao77/cloud-native-workshop.git'
+        origin: 'https://github.com/yangcao77/web-coolstore.git'
       checkoutFrom:
         remote: origin
-        revision: 'completed-sample'
+        revision: 'odo-scenario'
 components:
   - container:
       image: docker.io/yangcao77/coolstore
