@@ -52,7 +52,7 @@ commands:
    composite:
      commands:
       # proposed to change the composite.commands to list of struct
-      # {name: <commandName, required>, project: <projectName, optional>}
+      # {name: <commandName, required>, project: <projectName, optional>}, the command belongs to the specific project
       # this will be a breaking change, since composite.commands was in type of []string
       # for alternate approach, see example in comment below
        - name: build
