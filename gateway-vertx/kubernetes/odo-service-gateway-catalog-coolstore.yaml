@@ -1,0 +1,21 @@
+apiVersion: binding.operators.coreos.com/v1alpha1
+kind: ServiceBinding
+metadata:
+  creationTimestamp: null
+  name: gateway-catalog-coolstore
+spec:
+  application:
+    group: apps
+    name: gateway-coolstore
+    resource: deployments
+    version: v1
+  bindAsFiles: false
+  detectBindingResources: true
+  services:
+  - group: ""
+    id: catalog-coolstore
+    kind: Service
+    name: catalog-coolstore
+    version: v1
+status:
+  secret: ""

@@ -1,25 +1,88 @@
+commands:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm install
+    component: runtime
+    group:
+      isDefault: true
+      kind: build
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: install
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm start
+    component: runtime
+    group:
+      isDefault: true
+      kind: run
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: run
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm run debug
+    component: runtime
+    group:
+      isDefault: true
+      kind: debug
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: debug
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  exec:
+    commandLine: npm test
+    component: runtime
+    group:
+      isDefault: true
+      kind: test
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: test
+components:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+    api.devfile.io/parent-override-from: main devfile
+  container:
+    dedicatedPod: false
+    endpoints:
+    - exposure: public
+      name: web
+      secure: false
+      targetPort: 3000
+    - exposure: internal
+      name: http-3000
+      secure: false
+      targetPort: 3333
+    env:
+    - name: OPENSHIFT_BUILD_NAMESPACE
+      value: testproj
+    - name: URL_PREFIX
+      value: gateway-747409bf-
+    image: registry.access.redhat.com/ubi8/nodejs-16:latest
+    memoryLimit: 1024Mi
+    mountSources: true
+  name: runtime
 metadata:
   description: Stack with Node.js 14
   displayName: Node.js Runtime
   language: nodejs
-  name: web-nodejs
+  name: web
   projectType: nodejs
   tags:
   - NodeJS
   - Express
   - ubi8
   version: 1.0.1
-schemaVersion: 2.0.0
-parent:
-  id: nodejs
-  registryUrl: "https://registry.devfile.io"
-  components:
-  - container:
-      endpoints:
-      - exposure: public
-        name: web
-        targetPort: 3000
-      - name: http-3000
-        targetPort: 3000
-        exposure: internal
-    name: runtime
+schemaVersion: 2.1.0
+starterProjects:
+- attributes:
+    api.devfile.io/imported-from: 'id: nodejs, registryURL: https://registry.devfile.io'
+  git:
+    remotes:
+      origin: https://github.com/odo-devfiles/nodejs-ex.git
+  name: nodejs-starter
